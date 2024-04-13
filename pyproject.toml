@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "hexlet-code"
+version = "0.1.0"
+description = "project 50"
+authors = ["lazer"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.2.5"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
