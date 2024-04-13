@@ -1,5 +1,6 @@
 import argparse
 
+
 def main():
     parser = argparse.ArgumentParser(description="Generate diff")
     parser.add_argument('first_file', help="first file to compare")
@@ -11,4 +12,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-    
