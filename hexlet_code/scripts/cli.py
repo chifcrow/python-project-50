@@ -1,8 +1,9 @@
 # python-project-50/hexlet_code/scripts/cli.py
 
+import sys
 import argparse
-from data_loader import load_json
-from diff_generator import generate_diff
+from hexlet_code.scripts.data_loader import load_json
+from hexlet_code.scripts.diff_generator import generate_diff
 
 
 def main():
@@ -20,4 +21,8 @@ def main():
 
 
 if __name__ == "__main__":
+    if len(sys.argv) < 3:
+        print("Error: Two file paths are required")
+        print("Usage: gendiff file1 file2")
+        sys.exit(1)
     main()

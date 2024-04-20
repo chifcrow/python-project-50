@@ -1,0 +1,14 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+dist/
+# pyenv
+.python-version
+# poetry
+poetry.lock
+.venv
+venv/
+env/
+env.bak/
+venv.bak/
+# Tests
+.pytest_cache/
