@@ -1,0 +1,13 @@
+name: Hello World Workflow
+
+on: [push]
+
+jobs:
+  say_hello:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run say-hello
+        run: make say-hello
