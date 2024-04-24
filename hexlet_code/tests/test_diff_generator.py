@@ -1,55 +1,74 @@
 # test_diff_generator.py
 
-import json
+import pytest
 from hexlet_code.scripts.diff_generator import generate_diff
 
 
-def test_generate_diff_basic():
-    data1 = {"key1": "value1", "key2": "value2"}
-    data2 = {"key1": "value1", "key2": "new_value2"}
-
-    expected_output = {
-        "key1": "value1",
-        "changes": {
-            "- key2": "value2",
-            "+ key2": "new_value2"
-        }
+@pytest.fixture
+def data1():
+    return {
+        "host": "hexlet.io",
+        "timeout": 50,
+        "proxy": "123.234.53.22",
+        "follow": False
     }
-    assert json.loads(generate_diff(data1, data2)) == expected_output
 
 
-def test_generate_diff_with_added_key():
-    data1 = {"key1": "value1"}
-    data2 = {"key1": "value1", "key2": "value2"}
-
-    expected_output = {
-        "key1": "value1",
-        "changes": {
-            "+ key2": "value2"
-        }
+@pytest.fixture
+def data2():
+    return {
+        "timeout": 20,
+        "verbose": True,
+        "host": "hexlet.io"
     }
-    assert json.loads(generate_diff(data1, data2)) == expected_output
 
 
-def test_generate_diff_with_removed_key():
-    data1 = {"key1": "value1", "key2": "value2"}
-    data2 = {"key1": "value1"}
+def test_generate_diff_basic(data1, data2):
+    result = generate_diff(data1, data2)
+    expected_output = """
+{
+    host: hexlet.io
+  - follow: False
+  - proxy: 123.234.53.22
+  - timeout: 50
+  + timeout: 20
+  + verbose: True
+}
+    """.strip()
+    assert result == expected_output
 
-    expected_output = {
-        "key1": "value1",
-        "changes": {
-            "- key2": "value2"
-        }
+
+def test_generate_diff_no_changes(data1):
+    data_same_as_data1 = data1.copy()
+    result = generate_diff(data1, data_same_as_data1)
+    expected_output = """
+{
+    host: hexlet.io
+    timeout: 50
+    proxy: 123.234.53.22
+    follow: False
+}
+    """.strip()
+    assert result == expected_output
+
+
+def test_generate_diff_all_changed(data1, data2):
+    data2_modified = {
+        "host": "hexlet.com",
+        "timeout": 30,
+        "proxy": "98.765.43.21",
+        "verbose": False
     }
-    assert json.loads(generate_diff(data1, data2)) == expected_output
-
-
-def test_generate_diff_no_difference():
-    data1 = {"key1": "value1"}
-    data2 = {"key1": "value1"}
-
-    expected_output = {
-        "key1": "value1",
-        "changes": {}
-    }
-    assert json.loads(generate_diff(data1, data2)) == expected_output
+    result = generate_diff(data1, data2_modified)
+    expected_output = """
+{
+    host: hexlet.io
+  - follow: False
+  - proxy: 123.234.53.22
+  + proxy: 98.765.43.21
+  - timeout: 50
+  + timeout: 30
+  + verbose: False
+}
+    """.strip()
+    assert result == expected_output
