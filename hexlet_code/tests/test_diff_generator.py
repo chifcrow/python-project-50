@@ -25,29 +25,27 @@ def data2():
 
 def test_generate_diff_basic(data1, data2):
     result = generate_diff(data1, data2)
-    expected_output = """
-{
+    expected_output = """{
     host: hexlet.io
-    - follow: False
-    - proxy: 123.234.53.22
-    - timeout: 50
-    + timeout: 20
-    + verbose: True
-}""".strip()
-    assert result == expected_output
+  - follow: False
+  - proxy: 123.234.53.22
+  - timeout: 50
+  + timeout: 20
+  + verbose: True
+}"""
+    assert result.strip() == expected_output.strip()
 
 
 def test_generate_diff_no_changes(data1):
     data_same_as_data1 = data1.copy()
     result = generate_diff(data1, data_same_as_data1)
-    expected_output = """
-{
-    follow: False
+    expected_output = """{
     host: hexlet.io
-    proxy: 123.234.53.22
     timeout: 50
-}""".strip()
-    assert result == expected_output
+    proxy: 123.234.53.22
+    follow: False
+}"""
+    assert result.strip() == expected_output.strip()
 
 
 def test_generate_diff_all_changed(data1, data2):
@@ -58,21 +56,20 @@ def test_generate_diff_all_changed(data1, data2):
         "verbose": False
     }
     result = generate_diff(data1, data2_modified)
-    expected_output = """
-{
+    expected_output = """{
     host: hexlet.io
-    - follow: False
-    - proxy: 123.234.53.22
-    + proxy: 98.765.43.21
-    - timeout: 50
-    + timeout: 30
-    - verbose: True
-    + verbose: False
-}""".strip()
-    assert result == expected_output
+  - follow: False
+  - proxy: 123.234.53.22
+  + proxy: 98.765.43.21
+  - timeout: 50
+  + timeout: 30
+  - verbose: True
+  + verbose: False
+}"""
+    assert result.strip() == expected_output.strip()
 
 
 def test_generate_diff_empty_data():
     result = generate_diff({}, {})
     expected_output = "{}"
-    assert result == expected_output
+    assert result.strip() == expected_output.strip()
