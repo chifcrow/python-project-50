@@ -1,0 +1,24 @@
+stages:
+  - test
+
+lint:
+  stage: test
+  image: python:3.8
+  script:
+    - pip install flake8
+    - make lint
+  artifacts:
+    when: always
+    paths:
+      - flake8.txt
+
+test:
+  stage: test
+  image: python:3.8
+  script:
+    - pip install pytest
+    - make test
+  artifacts:
+    when: always
+    paths:
+      - pytest.txt
