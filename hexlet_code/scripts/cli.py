@@ -1,6 +1,5 @@
 # python-project-50/hexlet_code/scripts/cli.py
 
-import sys
 import argparse
 from hexlet_code.scripts.data_loader import load_json
 from hexlet_code.scripts.diff_generator import generate_diff
