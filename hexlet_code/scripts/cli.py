@@ -18,11 +18,3 @@ def main():
     data2 = load_json(args.file2)
 
     print(generate_diff(data1, data2))
-
-
-if __name__ == "__main__":
-    if len(sys.argv) < 3:
-        print("Error: Two file paths are required")
-        print("Usage: gendiff file1 file2")
-        sys.exit(1)
-    main()
