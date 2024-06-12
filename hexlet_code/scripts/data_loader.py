@@ -1,6 +1,9 @@
 # python-project-50/hexlet_code/scripts/data_loader.py
 
 import json
+import logging
+
+logging.basicConfig(level=logging.ERROR)
 
 
 def load_json(file_path):
@@ -8,11 +11,11 @@ def load_json(file_path):
         with open(file_path, 'r', encoding='utf-8') as file:
             return json.load(file)
     except FileNotFoundError:
-        print(f"Error: The file '{file_path}' does not exist.")
-        exit(1)
+        logging.error(f"Error: File '{file_path}' does not exist.")
+        raise
     except json.JSONDecodeError:
-        print(f"Error: The file '{file_path}' is not a valid JSON.")
-        exit(1)
+        logging.error(f"Error: File '{file_path}' is not valid JSON.")
+        raise
     except Exception as e:
-        print(f"An unexpected error occurred: {e}")
-        exit(1)
+        logging.error(f"An unexpected error occurred: {e}")
+        raise
