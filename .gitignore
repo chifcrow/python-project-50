@@ -1,0 +1,14 @@
+*.pyc
+__pycache__/
+.vscode/
+.idea/
+
+# Игнорирование логов
+*.log
+
+# Игнорирование egg-info
+python_project_50.egg-info/
+
+# Игнорирование служебных файлов
+.python-version
+hello.py
