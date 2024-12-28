@@ -31,3 +31,9 @@ jobs:
 
       - name: Run tests
         run: pytest
+
+      - name: Upload coverage to CodeClimate
+        run: |
+          ./cc-test-reporter before-build
+          pytest --cov=hexlet_code --cov-report=xml
+          ./cc-test-reporter after-build --exit-code $?
