@@ -1,0 +1,10 @@
+coverage==7.6.10
+exceptiongroup==1.2.2
+iniconfig==2.0.0
+packaging==24.2
+pluggy==1.5.0
+pytest==8.3.4
+pytest-cov==6.0.0
+-e git+ssh://git@github.com/chifcrow/python-project-50.git@aae27e9cb48a78a5413f29a71b49e30086b2f1b0#egg=python_project_50
+tomli==2.2.1
+uv==0.5.11
