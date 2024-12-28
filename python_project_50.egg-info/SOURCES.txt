@@ -1,0 +1,13 @@
+README.md
+hello.py
+pyproject.toml
+setup.cfg
+hexlet_code/__init__.py
+hexlet_code/scripts/__init__.py
+hexlet_code/scripts/gendiff.py
+python_project_50.egg-info/PKG-INFO
+python_project_50.egg-info/SOURCES.txt
+python_project_50.egg-info/dependency_links.txt
+python_project_50.egg-info/entry_points.txt
+python_project_50.egg-info/top_level.txt
+tests/test_gendiff.py
