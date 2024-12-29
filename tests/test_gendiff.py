@@ -20,3 +20,17 @@ def expected_diff():
 
 def test_generate_diff(file1, file2, expected_diff):
     assert generate_diff(file1, file2) == expected_diff
+
+
+@pytest.fixture
+def yaml_file1():
+    return "tests/test_data/file1.yml"
+
+
+@pytest.fixture
+def yaml_file2():
+    return "tests/test_data/file2.yml"
+
+
+def test_generate_diff_yaml(yaml_file1, yaml_file2, expected_diff):
+    assert generate_diff(yaml_file1, yaml_file2) == expected_diff

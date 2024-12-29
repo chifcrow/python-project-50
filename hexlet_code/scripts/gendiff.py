@@ -1,5 +1,6 @@
 import argparse
-import json
+import _json as json
+from hexlet_code.parsers import parse
 
 
 def read_file(file_path):
@@ -11,9 +12,6 @@ def read_file(file_path):
 
 
 def format_value(value):
-    """
-    Converts Python values to JSON-like string representation.
-    """
     if isinstance(value, bool):
         return str(value).lower()
     if value is None:
@@ -22,17 +20,11 @@ def format_value(value):
 
 
 def build_diff(data1, data2):
-    """
-    Builds a diff between two dictionaries.
-    """
     all_keys = sorted(set(data1.keys()) | set(data2.keys()))
     return [build_diff_line(key, data1, data2) for key in all_keys]
 
 
 def build_diff_line(key, data1, data2):
-    """
-    Builds a single diff line for the given key.
-    """
     if key in data1 and key not in data2:
         return f"  - {key}: {format_value(data1[key])}"
     elif key not in data1 and key in data2:
@@ -47,11 +39,8 @@ def build_diff_line(key, data1, data2):
 
 
 def generate_diff(file1_path, file2_path, format_name='plain'):
-    """
-    Generates diff between two JSON files in a human-readable format.
-    """
-    data1 = read_file(file1_path)
-    data2 = read_file(file2_path)
+    data1 = parse(file1_path)
+    data2 = parse(file2_path)
     diff_lines = build_diff(data1, data2)
     return "{\n" + "\n".join(diff_lines) + "\n}"
 

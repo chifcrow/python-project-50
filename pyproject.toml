@@ -5,7 +5,10 @@ description = "CLI tool for configuration comparison"
 authors = [
     {name = "Your Name", email = "your.email@example.com"}
 ]
-dependencies = []
+
+dependencies = [
+    "PyYAML"
+]
 
 [project.scripts]
 gendiff = "hexlet_code.scripts.gendiff:main"
