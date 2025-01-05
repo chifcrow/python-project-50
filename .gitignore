@@ -1,5 +1,6 @@
 *.pyc
 __pycache__/
+.pytest_cache/
 .vscode/
 venv/
 .idea/
@@ -12,4 +13,6 @@ python_project_50.egg-info/
 
 # Игнорирование служебных файлов
 .python-version
-hello.py
+run_diff.py
+
+.codegpt

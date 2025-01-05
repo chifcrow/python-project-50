@@ -1,48 +1,20 @@
 import argparse
-import _json as json
 from hexlet_code.parsers import parse
+from hexlet_code.diff_builder import build_diff
+from hexlet_code.formatters.stylish import format_stylish
 
 
-def read_file(file_path):
+def generate_diff(file1_path, file2_path, format_name='stylish'):
     """
-    Reads and parses a JSON file.
+    Generates a diff between two files in the specified format.
     """
-    with open(file_path) as file:
-        return json.load(file)
-
-
-def format_value(value):
-    if isinstance(value, bool):
-        return str(value).lower()
-    if value is None:
-        return 'null'
-    return value
-
-
-def build_diff(data1, data2):
-    all_keys = sorted(set(data1.keys()) | set(data2.keys()))
-    return [build_diff_line(key, data1, data2) for key in all_keys]
-
-
-def build_diff_line(key, data1, data2):
-    if key in data1 and key not in data2:
-        return f"  - {key}: {format_value(data1[key])}"
-    elif key not in data1 and key in data2:
-        return f"  + {key}: {format_value(data2[key])}"
-    elif data1[key] != data2[key]:
-        return (
-            f"  - {key}: {format_value(data1[key])}\n"
-            f"  + {key}: {format_value(data2[key])}"
-        )
-    else:
-        return f"    {key}: {format_value(data1[key])}"
-
-
-def generate_diff(file1_path, file2_path, format_name='plain'):
     data1 = parse(file1_path)
     data2 = parse(file2_path)
-    diff_lines = build_diff(data1, data2)
-    return "{\n" + "\n".join(diff_lines) + "\n}"
+    diff = build_diff(data1, data2)
+    if format_name == 'stylish':
+        return format_stylish(diff)
+    else:
+        raise ValueError(f"Unsupported format: {format_name}")
 
 
 def main():
@@ -54,7 +26,7 @@ def main():
     parser.add_argument(
         '-f', '--format',
         help='set format of output',
-        default='plain',
+        default='stylish',
         dest='format'
     )
     args = parser.parse_args()
