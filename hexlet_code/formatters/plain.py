@@ -1,38 +1,41 @@
-def format_plain(diff, parent_path=""):
+def format_plain(diff, path=''):
     """
-    Форматирует diff в стиль plain.
+    Форматирует diff в формат plain.
     """
     lines = []
     for node in diff:
-        key = node["key"]
-        full_path = f"{parent_path}.{key}" if parent_path else key
-        node_type = node["type"]
+        key = node['key']
+        property_path = f"{path}.{key}".lstrip('.')  # Формируем путь к свойству
+        node_type = node['type']
 
-        if node_type == "nested":
-            lines.append(format_plain(node["children"], full_path))
-        elif node_type == "added":
-            value = format_value_plain(node["value"])
-            lines.append(f"Property '{full_path}' was added with value: {value}")
-        elif node_type == "removed":
-            lines.append(f"Property '{full_path}' was removed")
-        elif node_type == "changed":
-            old_value = format_value_plain(node["value1"])
-            new_value = format_value_plain(node["value2"])
+        if node_type == 'nested':
+            # Рекурсивно обрабатываем вложенные структуры
+            lines.append(format_plain(node['children'], property_path))
+        elif node_type == 'added':
+            value = format_value(node['value'])
+            lines.append(f"Property '{property_path}' was added with value: {value}")
+        elif node_type == 'removed':
+            lines.append(f"Property '{property_path}' was removed")
+        elif node_type == 'changed':
+            value1 = format_value(node['value1'])
+            value2 = format_value(node['value2'])
             lines.append(
-                f"Property '{full_path}' was updated. From {old_value} to {new_value}")
-    return "\n".join(lines)
+                f"Property '{property_path}' was updated. From {value1} to {value2}")
+        # Если значение не изменилось, ничего не добавляем для типа 'unchanged'
+
+    return '\n'.join(lines)
 
 
-def format_value_plain(value):
+def format_value(value):
     """
-    Форматирует значение для plain.
+    Преобразует значение в строку, подходящую для plain.
     """
     if isinstance(value, dict):
         return "[complex value]"
-    elif isinstance(value, bool):
-        return str(value).lower()
-    elif value is None:
-        return "null"
     elif isinstance(value, str):
         return f"'{value}'"
-    return str(value)
+    elif value is None:
+        return "null"
+    elif isinstance(value, bool):
+        return str(value).lower()
+    return value

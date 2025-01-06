@@ -1,25 +1,23 @@
 import argparse
+import json
 from hexlet_code.parsers import parse
 from hexlet_code.diff_builder import build_diff
 from hexlet_code.formatters.stylish import format_stylish
 from hexlet_code.formatters.plain import format_plain
-from hexlet_code.formatters.json import format_json
+
+# Главная функция для генерации различий между двумя файлами
 
 
 def generate_diff(file1_path, file2_path, format_name='stylish'):
-    """
-    Generates a diff between two files in the specified format.
-    """
     data1 = parse(file1_path)
     data2 = parse(file2_path)
     diff = build_diff(data1, data2)
-
     if format_name == 'stylish':
         return format_stylish(diff)
-    elif format_name == 'json':
-        return format_json(diff)
     elif format_name == 'plain':
         return format_plain(diff)
+    elif format_name == 'json':
+        return json.dumps(diff, indent=2)
     else:
         raise ValueError(f"Unsupported format: {format_name}")
 
