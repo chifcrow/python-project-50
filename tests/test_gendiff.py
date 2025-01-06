@@ -86,3 +86,21 @@ def test_generate_diff_nested():
         return "\n".join([line.strip() for line in output.splitlines()])
 
     assert normalize_output(actual_result) == normalize_output(expected_result)
+
+
+def test_generate_diff_plain():
+    file1 = 'tests/test_data/nested_file1.json'
+    file2 = 'tests/test_data/nested_file2.json'
+    expected_result = """Property 'common.follow' was added with value: false
+Property 'common.setting2' was removed
+Property 'common.setting3' was updated. From true to null
+Property 'common.setting4' was added with value: 'blah blah'
+Property 'common.setting5' was added with value: [complex value]
+Property 'common.setting6.doge.wow' was updated. From '' to 'so much'
+Property 'common.setting6.ops' was added with value: 'vops'
+Property 'group1.baz' was updated. From 'bas' to 'bars'
+Property 'group1.nest' was updated. From [complex value] to 'str'
+Property 'group2' was removed
+Property 'group3' was added with value: [complex value]"""
+    actual_result = generate_diff(file1, file2, 'plain')
+    assert actual_result.strip() == expected_result.strip()
