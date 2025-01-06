@@ -1,4 +1,5 @@
 from hexlet_code.scripts.gendiff import generate_diff
+import json
 
 
 def test_generate_diff_json():
@@ -104,3 +105,21 @@ Property 'group2' was removed
 Property 'group3' was added with value: [complex value]"""
     actual_result = generate_diff(file1, file2, 'plain')
     assert actual_result.strip() == expected_result.strip()
+
+
+def test_generate_diff_json_format():
+    file1 = 'tests/test_data/nested_file1.json'
+    file2 = 'tests/test_data/nested_file2.json'
+    actual_result = generate_diff(file1, file2, format_name='json')
+
+    # Пример ожидаемого результата
+    expected_result = """
+    {
+        "common": {
+            "key": "value",
+            ...
+        }
+    }
+    """  # Пример ожидаемого результата в формате JSON
+
+    assert json.loads(actual_result) == json.loads(expected_result)

@@ -131,6 +131,24 @@ Property 'group2' was removed
 Property 'group3' was added with value: [complex value]
 ```
 
+## Формат JSON
+
+```bash
+gendiff --format json tests/test_data/nested_file1.json tests/test_data/nested_file2.json
+```
+
+Результат:
+
+```bash
+{
+    "common": {
+        "setting1": "Value 1",
+        "- setting2": 200,
+        ...
+    }
+}
+```
+
 ## Лицензия
 
 Этот проект распространяется под лицензией MIT.

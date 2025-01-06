@@ -1,0 +1,19 @@
+# Установить авто-нормализацию для всех текстовых файлов
+* text=auto
+
+# Принудительно использовать LF для следующих типов файлов
+*.py text eol=lf
+*.md text eol=lf
+*.yml text eol=lf
+*.json text eol=lf
+*.yaml text eol=lf
+*.txt text eol=lf
+
+# Явно укажите бинарные файлы, чтобы они не изменялись
+*.png binary
+*.jpg binary
+*.gif binary
+*.zip binary
+*.exe binary
+*.dll binary
+*.so binary
