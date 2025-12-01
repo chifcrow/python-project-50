@@ -1,88 +1,79 @@
-from hexlet_code.scripts.gendiff import generate_diff
+import json
+import os
+
+from hexlet_code.gendiff import generate_diff
 
 
-def test_generate_diff_json():
-    file1 = 'tests/test_data/file1.json'
-    file2 = 'tests/test_data/file2.json'
-    expected_result = """{
-  - follow: false
-    host: hexlet.io
-  - proxy: 123.234.53.22
-  - timeout: 50
-  + timeout: 20
-  + verbose: true
-}"""
-    actual_result = generate_diff(file1, file2)
-    assert actual_result.strip() == expected_result.strip()
+FIXTURES_DIR = os.path.join(os.path.dirname(__file__), "test_data")
 
 
-# Тест для file1.yml и file2.yml
-def test_generate_diff_yaml():
-    file1 = 'tests/test_data/file1.yml'
-    file2 = 'tests/test_data/file2.yml'
-    expected_result = """{
-  - follow: false
-    host: hexlet.io
-  - proxy: 123.234.53.22
-  - timeout: 50
-  + timeout: 20
-  + verbose: true
-}"""
-    actual_result = generate_diff(file1, file2)
-    assert actual_result.strip() == expected_result.strip()
+def read_fixture(name: str) -> str:
+    path = os.path.join(FIXTURES_DIR, name)
+    with open(path, "r", encoding="utf-8") as f:
+        return f.read().strip()
 
 
-# Тест для nested_file1.json и nested_file2.json
+def test_generate_diff_json_stylish():
+    file1 = os.path.join(FIXTURES_DIR, "file1.json")
+    file2 = os.path.join(FIXTURES_DIR, "file2.json")
 
-def test_generate_diff_nested():
-    file1 = 'tests/test_data/nested_file1.json'
-    file2 = 'tests/test_data/nested_file2.json'
+    expected = read_fixture("expected_diff.txt")
+    actual = generate_diff(file1, file2, "stylish").strip()
 
-    expected_result = """{
-    common: {
-        setting1: Value 1
-      - setting2: 200
-      - setting3: true
-      + setting3: null
-      + setting4: blah blah
-        setting6: {
-            doge: {
-              - wow:
-              + wow: so much
-            }
-            key: value
-          + ops: vops
-        }
-    }
-    group1: {
-      - baz: bas
-      + baz: bars
-        foo: bar
-      - nest: {
-            key: value
-        }
-      + nest: str
-    }
-  - group2: {
-        abc: 12345
-        deep: {
-            id: 45
-        }
-    }
-  + group3: {
-        deep: {
-            id: {
-                number: 45
-            }
-        }
-        fee: 100500
-    }
-}"""
+    assert actual == expected
 
-    actual_result = generate_diff(file1, file2)
 
-    # Удаляем лишние пробелы и сравниваем строки
-    def normalize_output(output):
-        return "\n".join([line.strip() for line in output.splitlines()])
+def test_generate_diff_yaml_stylish():
+    file1 = os.path.join(FIXTURES_DIR, "file1.yml")
+    file2 = os.path.join(FIXTURES_DIR, "file2.yml")
 
-    assert normalize_output(actual_result) == normalize_output(expected_result)
+    expected = read_fixture("expected_diff.txt")
+    actual = generate_diff(file1, file2, "stylish").strip()
+
+    assert actual == expected
+
+
+def test_generate_diff_nested_stylish():
+    file1 = os.path.join(FIXTURES_DIR, "nested_file1.json")
+    file2 = os.path.join(FIXTURES_DIR, "nested_file2.json")
+
+    expected = read_fixture("expected_stylish.txt")
+    actual = generate_diff(file1, file2, "stylish")
+
+    # Normalize whitespace per line to avoid issues with indentation
+    def normalize(output: str) -> str:
+        return "\n".join(line.rstrip() for line in output.splitlines())
+
+    assert normalize(actual) == normalize(expected)
+
+
+def test_generate_diff_plain_flat():
+    file1 = os.path.join(FIXTURES_DIR, "file1.json")
+    file2 = os.path.join(FIXTURES_DIR, "file2.json")
+
+    expected = read_fixture("expected_plain.txt")
+    actual = generate_diff(file1, file2, "plain").strip()
+
+    assert actual == expected
+
+
+def test_generate_diff_plain_nested():
+    file1 = os.path.join(FIXTURES_DIR, "nested_file1.json")
+    file2 = os.path.join(FIXTURES_DIR, "nested_file2.json")
+
+    expected = read_fixture("expected_plain_nested.txt")
+    actual = generate_diff(file1, file2, "plain").strip()
+
+    assert actual == expected
+
+
+def test_generate_diff_json_format():
+    file1 = os.path.join(FIXTURES_DIR, "file1.json")
+    file2 = os.path.join(FIXTURES_DIR, "file2.json")
+
+    output = generate_diff(file1, file2, "json")
+    data = json.loads(output)
+
+    # Basic structural checks; details проверяются форматером stylish/plain
+    assert isinstance(data, list)
+    assert all("key" in node and "type" in node for node in data)
