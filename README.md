@@ -32,21 +32,15 @@ CLI-утилита и библиотека для сравнения конфи�
 
 ### 1. Сравнение плоских файлов (формат по умолчанию — `stylish`)
 
-```
 [![asciicast](https://asciinema.org/a/vQDipYFfH4xxDHwmS13AMmdgv.svg)](https://asciinema.org/a/vQDipYFfH4xxDHwmS13AMmdgv)
-```
 
 ### 2. Сравнение вложенных структур (формат `stylish`)
 
-```
 [![asciicast](https://asciinema.org/a/j6I7sXEBXUtGjUKvcFvMwYaGr.svg)](https://asciinema.org/a/j6I7sXEBXUtGjUKvcFvMwYaGr)
-```
 
 ### 3. Разные форматы вывода (`plain` и `json`)
 
-```
 [![asciicast](https://asciinema.org/a/YuhxQoSUUwE84fcEB5FVjFKKn.svg)](https://asciinema.org/a/YuhxQoSUUwE84fcEB5FVjFKKn)
-```
 
 ## Установка
 
