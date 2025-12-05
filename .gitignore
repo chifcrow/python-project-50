@@ -1,9 +1,23 @@
+# Asciinema recordings
+*.cast
+
 *.pyc
 __pycache__/
 .pytest_cache/
 .vscode/
+
 venv/
+.venv/
 .idea/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Pytest / coverage
+.pytest_cache/
+.coverage
+coverage.xml
 
 # Игнорирование логов
 *.log
