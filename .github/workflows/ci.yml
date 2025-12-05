@@ -25,9 +25,14 @@ jobs:
           pip install flake8 pytest pytest-cov
 
       - name: Lint
-        run: |
-          make lint
+        run: make lint
 
       - name: Test
-        run: |
-          make test
+        run: make test
+
+      - name: Upload coverage to Qlty
+        uses: qltysh/qlty-action/coverage@v2
+        with:
+          token: ${{ secrets.QLTY_COVERAGE_TOKEN }}
+          files: coverage.xml
+          format: coverage.py
