@@ -35,4 +35,4 @@ jobs:
         with:
           token: ${{ secrets.QLTY_COVERAGE_TOKEN }}
           files: coverage.xml
-          format: coverage.py
+          format: cobertura
