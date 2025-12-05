@@ -27,12 +27,17 @@ jobs:
       - name: Lint
         run: make lint
 
-      - name: Test
+      - name: Test (pytest + coverage.xml)
         run: make test
+
+      - name: Generate LCOV report
+        run: |
+          mkdir -p reports
+          # coverage.py читает .coverage, который создал pytest-cov
+          coverage lcov -o reports/lcov.info
 
       - name: Upload coverage to Qlty
         uses: qltysh/qlty-action/coverage@v2
         with:
           token: ${{ secrets.QLTY_COVERAGE_TOKEN }}
-          files: coverage.xml
-          format: cobertura
+          files: reports/lcov.info
