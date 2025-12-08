@@ -1,4 +1,4 @@
-from hexlet_code.parsers import parse
+from hexlet_code.parser import parse
 from hexlet_code.diff_builder import build_diff
 from hexlet_code.formatters import format_diff
 
