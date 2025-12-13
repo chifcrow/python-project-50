@@ -1,43 +1,47 @@
-name: CI
+name: Python CI
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
   pull_request:
+    branches:
+      - main
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Setup Python
-        uses: actions/setup-python@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          python-version: "3.10"
+          python-version: "3.12"
 
-      - name: Install dependencies
+      - name: Install project (dev)
         run: |
-          pip install --upgrade pip
-          pip install -e .
-          pip install flake8 pytest pytest-cov
+          python -m pip install --upgrade pip
+          pip install -e .[dev]
 
       - name: Lint
-        run: make lint
-
-      - name: Test (pytest + coverage.xml)
-        run: make test
-
-      - name: Generate LCOV report
         run: |
-          mkdir -p reports
-          # coverage.py читает .coverage, который создал pytest-cov
-          coverage lcov -o reports/lcov.info
+          make lint
 
-      - name: Upload coverage to Qlty
-        uses: qltysh/qlty-action/coverage@v2
+      - name: Tests + coverage.xml
+        run: |
+          make test-coverage
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@v2
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: https://sonarcloud.io
         with:
-          token: ${{ secrets.QLTY_COVERAGE_TOKEN }}
-          files: reports/lcov.info
+          args: >
+            -Dsonar.projectKey=chifcrow_python-project-50
+            -Dsonar.organization=chifcrow
+            -Dsonar.python.coverage.reportPaths=coverage.xml
+            -Dsonar.sourceEncoding=UTF-8

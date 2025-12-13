@@ -1,100 +1,110 @@
-# Gendiff — вычислитель отличий
+# Gendiff — Difference Calculator
 
-CLI-утилита и библиотека для сравнения конфигурационных файлов.  
-Проект выполнен в рамках курса Hexlet «Вычислитель отличий».
-
----
-
-## Статус проекта
-
-[![Actions Status](https://github.com/chifcrow/python-project-50/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/chifcrow/python-project-50/actions)
-![CI](https://github.com/chifcrow/python-project-50/actions/workflows/ci.yml/badge.svg)
-[![Maintainability](https://api.codeclimate.com/v1/badges/400671110001e36e8db4/maintainability)](https://codeclimate.com/github/chifcrow/python-project-50/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/400671110001e36e8db4/test_coverage)](https://codeclimate.com/github/chifcrow/python-project-50/test_coverage)
+A CLI tool and Python library for comparing configuration files.
+The project is implemented as part of the Hexlet course **“Difference Calculator”**.
 
 ---
 
-## Что умеет gendiff
+## Project Status
 
-- Сравнивает файлы форматов **JSON** и **YAML** (`.json`, `.yml`, `.yaml`)
-- Строит дерево отличий (added / removed / changed / unchanged / nested)
-- Поддерживает три формата вывода:
-  - **stylish** — человекочитаемое древовидное отображение
-  - **plain** — линейные описания изменений
-  - **json** — структурированный JSON для дальнейшей обработки
-- Работает как:
-  - консольная команда `gendiff`
-  - импортируемая функция `generate_diff()` из пакета `hexlet_code`
+[![Actions Status](https://github.com/chifcrow/python-project-50/actions/workflows/ci.yml/badge.svg)](https://github.com/chifcrow/python-project-50/actions)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=chifcrow_python-project-50&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=chifcrow_python-project-50)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=chifcrow_python-project-50&metric=coverage)](https://sonarcloud.io/summary/new_code?id=chifcrow_python-project-50)
 
 ---
 
-## Демонстрация (asciinema)
+## Description
 
-### 1. Сравнение плоских файлов (формат по умолчанию — `stylish`)
+**Gendiff** is a command-line utility for calculating the difference between two configuration files.
+It supports **JSON** and **YAML** formats and can output results in multiple representations.
 
-[![asciicast](https://asciinema.org/a/vQDipYFfH4xxDHwmS13AMmdgv.svg)](https://asciinema.org/a/vQDipYFfH4xxDHwmS13AMmdgv)
+The tool can be used as:
 
-### 2. Сравнение вложенных структур (формат `stylish`)
+- a standalone CLI command
+- an importable Python function
 
-[![asciicast](https://asciinema.org/a/j6I7sXEBXUtGjUKvcFvMwYaGr.svg)](https://asciinema.org/a/j6I7sXEBXUtGjUKvcFvMwYaGr)
+---
 
-### 3. Разные форматы вывода (`plain` и `json`)
+## Features
 
-[![asciicast](https://asciinema.org/a/YuhxQoSUUwE84fcEB5FVjFKKn.svg)](https://asciinema.org/a/YuhxQoSUUwE84fcEB5FVjFKKn)
+- Supports **JSON** and **YAML** files (`.json`, `.yml`, `.yaml`)
+- Builds a structured difference tree:
+  - `added`
+  - `removed`
+  - `changed`
+  - `unchanged`
+  - `nested`
+- Provides three output formats:
+  - **stylish** — human-readable tree view
+  - **plain** — line-by-line change descriptions
+  - **json** — structured JSON output for further processing
 
-## Установка
+---
 
-Рекомендуется использовать виртуальное окружение (`venv`).
+## Installation
+
+### Using pip (recommended inside a virtual environment)
 
 ```bash
-git clone https://github.com/chifcrow/python-project-50.git
-cd python-project-50
-
-python -m venv venv
-source venv/bin/activate   # Linux / macOS
-# .\venv\Scripts\activate  # Windows PowerShell
-
 pip install -e .
-После установки команда gendiff становится доступна внутри venv.
 ```
 
-### Использование (CLI)
+After installation, the gendiff command becomes available.
 
-Общий синтаксис:
+### Using Makefile
 
 ```bash
-gendiff [-f FORMAT] first_file second_file
+make install
+make build
+make package-install
 ```
 
-Где:
+## Usage
 
-first_file, second_file — пути к сравниваемым файлам
+### CLI
 
-FORMAT — формат вывода: stylish (по умолчанию), plain, json
-
-### Примеры
-
-1. Формат по умолчанию (stylish)
+Show help:
 
 ```bash
-gendiff tests/test_data/file1.json tests/test_data/file2.json
+gendiff -h
 ```
 
-2. Формат plain
+### Basic usage
 
 ```bash
-gendiff -f plain tests/test_data/file1.yml tests/test_data/file2.yml
+gendiff <file_path1> <file_path2> --format <format>
 ```
 
-3. Формат json
+- --format is optional
+- default format is stylish
+- available formats: stylish, plain, json
+
+## Examples
 
 ```bash
-gendiff -f json tests/test_data/file1.json tests/test_data/file2.json
+gendiff file1.json file2.yml
+gendiff --format plain file1.yml file2.yml
+gendiff --format json file1.json file2.json
 ```
 
-### Пример вывода (stylish)
+## Usage as a Library
 
-```bash
+```python
+from gendiff import generate_diff
+
+diff = generate_diff(
+   "path/to/file1.yml",
+   "path/to/file2.yml",
+   format_name="plain",
+)
+
+print(diff)
+```
+
+## Output Example (stylish)
+
+```text
+{
     common: {
       + follow: false
         setting1: Value 1
@@ -129,64 +139,55 @@ gendiff -f json tests/test_data/file1.json tests/test_data/file2.json
 }
 ```
 
-### Использование как библиотеки
+## Project Structure
 
-```bash
-from hexlet_code import generate_diff
-
-diff = generate_diff(
-    "path/to/file1.yml",
-    "path/to/file2.yml",
-    format_name="plain",
-)
-
-print(diff)
+```text
+gendiff/
+├── __init__.py          # public API (generate_diff)
+├── diff_builder.py      # builds diff tree
+├── parsers.py           # JSON / YAML parsers
+├── formatters/
+│   ├── __init__.py      # formatter dispatcher
+│   ├── stylish.py
+│   ├── plain.py
+│   └── json.py
+└── scripts/
+    └── gendiff.py       # CLI entry point
 ```
 
-### Структура проекта
+## Development
 
-```bash
-hexlet_code/
-  ├── __init__.py          # экспорт generate_diff
-  ├── gendiff.py           # библиотечная функция generate_diff
-  ├── parsers.py           # парсер JSON/YAML
-  ├── diff_builder.py      # построение дерева diff
-  ├── formatters/
-  │     ├── __init__.py    # выбор форматера по имени
-  │     ├── stylish.py     # формат stylish
-  │     ├── plain.py       # формат plain
-  │     └── json_.py       # формат json
-  └── scripts/
-        └── gendiff.py     # CLI entry point (argparse)
-```
-
-### Тесты и качество кода
-
-- Локальный запуск линтера:
+### Linting
 
 ```bash
 make lint
 ```
 
-- Запуск тестов + генерация coverage.xml:
+### Auto-fix lint issues
+
+```bash
+make lint-fix
+```
+
+### Tests and Coverage
 
 ```bash
 make test
 ```
 
-Покрытие кода отправляется в Code Climate через GitHub Actions.
+Coverage reports are generated automatically and analyzed by SonarCloud in CI.
 
-## Технологии
+## Technologies
 
-- Python 3.10
-- PyYAML (поддержка YAML)
-- pytest + pytest-cov
-- flake8
+- Python 3.12
+- PyYAML
+- pytest / pytest-cov
+- Ruff
 - GitHub Actions (CI)
-- Code Climate (coverage)
+  SonarCloud (code quality & coverage)
 
-## Лицензия
+## License
 
-Проект распространяется под лицензией MIT.
+MIT License
 
-## Автор
+Copyright (c) 2025 ChifCrow

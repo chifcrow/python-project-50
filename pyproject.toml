@@ -1,21 +1,26 @@
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
-
 [project]
 name = "hexlet-code"
 version = "0.1.0"
 description = "CLI tool for configuration comparison"
-authors = [
-    {name = "Your Name", email = "your.email@example.com"}
-]
-
+readme = "README.md"
+requires-python = ">=3.12"
 dependencies = [
-    "PyYAML"
+  "pyyaml>=6.0.2",
 ]
 
-[project.scripts]
-gendiff = "hexlet_code.scripts.gendiff:main"
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.3.5",
+  "pytest-cov>=6.1.1",
+  "ruff>=0.11.8",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
-packages = ["hexlet_code", "gendiff"]
+packages = ["gendiff"]
+
+[project.scripts]
+gendiff = "gendiff.scripts.gendiff:main"
