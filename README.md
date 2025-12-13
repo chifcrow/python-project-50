@@ -87,6 +87,8 @@ Shows alternative output formats suitable for logs or machine processing.
 
 [![asciicast](https://asciinema.org/a/4ljQRx9Kv8mzEs6PSWsGpHrVu.svg)](https://asciinema.org/a/4ljQRx9Kv8mzEs6PSWsGpHrVu)
 
+[![asciicast](https://asciinema.org/a/8pGzb4Xn5Tuk1Bvzb9MVzdnQk.svg)](https://asciinema.org/a/8pGzb4Xn5Tuk1Bvzb9MVzdnQk)
+
 ### Library
 
 ```python
