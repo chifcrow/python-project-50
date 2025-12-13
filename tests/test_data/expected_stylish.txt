@@ -7,7 +7,7 @@
       + setting4: blah blah
         setting6: {
             doge: {
-              - wow:
+              - wow: 
               + wow: so much
             }
             key: value

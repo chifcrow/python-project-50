@@ -47,11 +47,11 @@ def _iter_stylish(diff: List[Dict[str, Any]], depth: int) -> str:
 
 
 def _format_line(prefix: str, key: str, value: str, depth: int) -> str:
-    # Empty string values must be rendered as "key:
-    # " without trailing space/value
+    indent = _indent(depth, with_shift=True)
+    # Hexlet expects "key: " (with trailing space) for empty string values
     if value == "":
-        return f"{_indent(depth, with_shift=True)}{prefix} {key}:"
-    return f"{_indent(depth, with_shift=True)}{prefix} {key}: {value}"
+        return f"{indent}{prefix} {key}: "
+    return f"{indent}{prefix} {key}: {value}"
 
 
 def _stringify(value: Any, depth: int) -> str:
@@ -71,8 +71,9 @@ def _stringify_dict(value: Dict[str, Any], depth: int) -> str:
 
     for k, v in value.items():
         rendered = _stringify(v, depth + 1)
+        # Same rule inside nested dicts: "key: " for empty strings
         if rendered == "":
-            lines.append(f"{_indent(depth)}{k}:")
+            lines.append(f"{_indent(depth)}{k}: ")
         else:
             lines.append(f"{_indent(depth)}{k}: {rendered}")
 
