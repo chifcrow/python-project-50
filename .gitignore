@@ -1,32 +1,35 @@
-# Asciinema recordings
-*.cast
-
-*.pyc
+# Byte-compiled / optimized / DLL files
 __pycache__/
-.pytest_cache/
-.vscode/
+*.py[cod]
+*$py.class
 
-venv/
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Virtual environments
 .venv/
-.idea/
+venv/
 
-# Python cache
-__pycache__/
-*.pyc
-
-# Pytest / coverage
+# Python tooling
 .pytest_cache/
+.mypy_cache/
+ruff_cache/
+
+# Coverage
 .coverage
 coverage.xml
+.coverage.xml
 
-# Игнорирование логов
-*.log
+# IDE / editor configs
+.vscode/
+.idea/
 
-# Игнорирование egg-info
-python_project_50.egg-info/
+# OS files
+.DS_Store
+Thumbs.db
 
-# Игнорирование служебных файлов
-.python-version
-run_diff.py
-
-.codegpt
+# Local configs
+.env
+.env.*
