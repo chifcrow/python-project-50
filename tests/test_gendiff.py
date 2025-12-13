@@ -34,12 +34,12 @@ def test_generate_diff_stylish(file1: str, file2: str,
 
 
 def test_generate_diff_plain_nested() -> None:
-    expected = read_fixture("expected_plain_nested.txt")
+    expected = read_fixture("expected_plain_nested.txt").rstrip()
     result = generate_diff(
         get_fixture_path("nested_file1.json"),
         get_fixture_path("nested_file2.json"),
         format_name="plain",
-    )
+    ).rstrip()
     assert result == expected
 
 

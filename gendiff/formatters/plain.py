@@ -3,8 +3,7 @@ from typing import Any, Dict, List
 
 def format_plain(diff: List[Dict[str, Any]]) -> str:
     lines = _iter_plain(diff)
-    result = "\n".join(lines)
-    return f"{result}\n" if result else ""
+    return "\n".join(lines)
 
 
 def _iter_plain(diff: List[Dict[str, Any]], parent: str = "") -> List[str]:
@@ -21,8 +20,7 @@ def _iter_plain(diff: List[Dict[str, Any]], parent: str = "") -> List[str]:
 
         elif node_type == "added":
             value = _stringify_value(node["value"])
-            lines.append(
-                f"Property '{full_key}' was added with value: {value}")
+            lines.append(f"Property '{full_key}' was added with value: {value}")
 
         elif node_type == "removed":
             lines.append(f"Property '{full_key}' was removed")
@@ -44,9 +42,7 @@ def _iter_plain(diff: List[Dict[str, Any]], parent: str = "") -> List[str]:
 
 
 def _stringify_value(value: Any) -> str:
-    if isinstance(value, dict):
-        return "[complex value]"
-    if isinstance(value, list):
+    if isinstance(value, dict) or isinstance(value, list):
         return "[complex value]"
     if value is True:
         return "true"
