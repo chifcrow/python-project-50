@@ -43,7 +43,8 @@ jobs:
           args: >
             -Dsonar.projectKey=chifcrow_python-project-50
             -Dsonar.organization=chifcrow
-            -Dsonar.python.coverage.reportPaths=coverage.xml
-            -Dsonar.sourceEncoding=UTF-8
             -Dsonar.sources=gendiff
             -Dsonar.tests=tests
+            -Dsonar.python.version=3.12
+            -Dsonar.python.coverage.reportPaths=coverage.xml
+            -Dsonar.sourceEncoding=UTF-8

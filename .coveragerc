@@ -1,10 +1,7 @@
 [run]
+relative_files = True
 source = gendiff
 
 [report]
 omit =
     tests/*
-    */__init__.py
-
-[xml]
-output = coverage.xml
