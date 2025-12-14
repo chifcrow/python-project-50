@@ -20,7 +20,8 @@ def _iter_plain(diff: List[Dict[str, Any]], parent: str = "") -> List[str]:
 
         elif node_type == "added":
             value = _stringify_value(node["value"])
-            lines.append(f"Property '{full_key}' was added with value: {value}")
+            lines.append(
+                f"Property '{full_key}' was added with value: {value}")
 
         elif node_type == "removed":
             lines.append(f"Property '{full_key}' was removed")
