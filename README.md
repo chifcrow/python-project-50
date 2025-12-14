@@ -30,11 +30,28 @@ Supported output formats:
 
 ---
 
+## Requirements
+
+- Python 3.12+
+- pip (recommended) or any modern Python package manager
+
+---
+
 ## Installation
 
-Recommended inside a virtual environment:
+### From PyPI (when published)
 
 ```bash
+pip install gendiff
+```
+
+From source (recommended for development)
+
+```bash
+git clone https://github.com/chifcrow/python-project-50.git
+cd python-project-50
+python -m venv venv
+source venv/bin/activate
 pip install -e .[dev]
 ```
 
@@ -44,7 +61,7 @@ After installation, the gendiff command becomes available.
 
 ### CLI
 
-#### Help:
+Help:
 
 ```bash
 gendiff -h
@@ -61,6 +78,20 @@ Explicit format:
 ```bash
 gendiff --format plain file1.yml file2.yml
 gendiff --format json file1.json file2.json
+```
+
+## Library
+
+```python
+from gendiff import generate_diff
+
+diff = generate_diff(
+    "path/to/file1.yml",
+    "path/to/file2.yml",
+    format_name="plain",
+)
+
+print(diff)
 ```
 
 ## Examples
@@ -89,21 +120,7 @@ Shows alternative output formats suitable for logs or machine processing.
 
 [![asciicast](https://asciinema.org/a/8pGzb4Xn5Tuk1Bvzb9MVzdnQk.svg)](https://asciinema.org/a/8pGzb4Xn5Tuk1Bvzb9MVzdnQk)
 
-### Library
-
-```python
-from gendiff import generate_diff
-
-diff = generate_diff(
-    "path/to/file1.yml",
-    "path/to/file2.yml",
-    format_name="plain",
-)
-
-print(diff)
-```
-
-### Development
+## Development
 
 Lint:
 
@@ -129,7 +146,7 @@ Run tests with coverage.xml generation:
 make test-coverage
 ```
 
-### Project Structure
+## Project Structure
 
 ```text
 gendiff/
