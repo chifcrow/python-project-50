@@ -24,3 +24,15 @@ packages = ["gendiff"]
 
 [project.scripts]
 gendiff = "gendiff.scripts.gendiff:main"
+
+[tool.coverage.run]
+relative_files = true
+source = ["gendiff"]
+
+[tool.coverage.report]
+omit = [
+  "tests/*",
+]
+
+[tool.coverage.xml]
+output = "coverage.xml"
